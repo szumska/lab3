@@ -3,6 +3,7 @@
 
 from math import sqrt
 
+
 users = {
         "Ania": 
             {"Blues Traveler": 1.,
@@ -49,10 +50,31 @@ def manhattan(rating1, rating2):
 
 def pearson(rating1, rating2):
     korelacja=0
-    
-    return korelacja
+    udaloSiePorownac = False
+    klucze1 = rating1.keys()
+    klucze2 = rating2.keys() 
+    n=0
+    suma1=0
+    suma2=0
+    suma3=0
+    suma4=0
+    suma5=0
+    for klucz in klucze1:
+        if klucz in rating2.keys():
+            udaloSiePorownac = True
+            suma1=suma1+rating1[klucz]*rating2[klucz]
+            suma2=suma2+rating1[klucz]
+            suma3=suma3+rating2[klucz]
+            suma4=suma4+pow(rating1[klucz],2)
+            suma5=suma5+pow(rating2[klucz],2)
+            n+=1
+    korelacja=(suma1-(suma2*suma3)/n)/(sqrt(suma4-pow(suma2,2)/n)*sqrt(suma5-pow(suma3,2)/n))
+    if (udaloSiePorownac==True):
+        return korelacja
+    else:
+        return -1
 
-def pearsonNumpy(rating1, rating2):
-    
-    korelacja=0
-    return korelacja
+
+
+print ("Odleglosc manhattan między preferencjami Boni  i Ani to: " + str(manhattan(users["Bonia"],users["Ania"])))
+print ("Korelacja między ich preferencjami to: " + str(pearson(users["Bonia"],users["Ania"])))
